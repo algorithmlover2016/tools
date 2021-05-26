@@ -1,0 +1,12 @@
+reference to
+https://numpy.org/doc/stable/reference/generated/numpy.percentile.html
+and
+https://www.pythonheidong.com/blog/article/398943/74bde73098fcf59b3329/
+
+add some key comments:
+其余的参数我们都忽略，重点来看interpolation。从代码中我们可以知道np.percentile默认使用的是linear即线性插值的方式来计算百分位数。从文档对interpolation的解释来看，不论哪种计算方式都会涉及到i、j。注意：i、j是值，不是下标。那么接下来就介绍i、j如何计算：
+
+首先对数组进行从小到大的排序例如a = [4, 2, 1, 3] 排序之后 a = [1, 2, 3, 4]
+然后计算位置loc = 1 + (n - 1) * p 。其中n是数组长度；p为百分位数0 <= p <= 1，例如p = 0.95 表示95%分位数；loc表示百分位数是数组中的第几个元素，例如loc = 3.0表示百分位数是数组中第3个元素其下标是2。注意：在Python中如果 p 为浮点数则最终结果为浮点数。
+若loc小数部分不为零则i = a[loc整数部分 - 1]；j = a[loc整数部分]；若loc为整数或小数部分为零则i = j = 百分位数 = a[loc整数部分 - 1]。
+
